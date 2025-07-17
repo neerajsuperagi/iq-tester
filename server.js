@@ -588,6 +588,9 @@ async function initDatabase() {
     // Fix existing table constraint (migration)
     await fixPasswordHashConstraint();
     
+    // Populate questions bank
+    await populateQuestionsBank();
+    
     // Create admin user from environment variables
     await createAdminUser();
   } catch (error) {
@@ -608,6 +611,90 @@ async function fixPasswordHashConstraint() {
     } else {
       console.log('Note: Could not modify password_hash constraint (this is ok if column is already nullable)');
     }
+  }
+}
+
+// Populate questions bank with IQ test questions
+async function populateQuestionsBank() {
+  try {
+    // Check if questions already exist
+    const existingQuestions = await db.query('SELECT COUNT(*) FROM questions_bank');
+    const questionCount = parseInt(existingQuestions.rows[0].count);
+    
+    if (questionCount >= 30) {
+      console.log(`Questions bank already populated with ${questionCount} questions`);
+      return;
+    }
+    
+    console.log('Populating questions bank...');
+    
+    // Question images and their correct answers
+    const QUESTIONS = {
+      'Screenshot from 2025-07-17 11-45-35.png': 'C',
+      'Screenshot from 2025-07-17 11-45-40.png': 'C',
+      'Screenshot from 2025-07-17 11-45-44.png': 'E',
+      'Screenshot from 2025-07-17 11-45-50.png': 'B',
+      'Screenshot from 2025-07-17 11-45-55.png': 'F',
+      'Screenshot from 2025-07-17 11-46-03.png': 'C',
+      'Screenshot from 2025-07-17 11-46-07.png': 'E',
+      'Screenshot from 2025-07-17 11-46-13.png': 'E',
+      'Screenshot from 2025-07-17 11-46-18.png': 'E',
+      'Screenshot from 2025-07-17 11-46-57.png': 'B',
+      'Screenshot from 2025-07-17 11-47-04.png': 'C',
+      'Screenshot from 2025-07-17 11-47-12.png': 'D',
+      'Screenshot from 2025-07-17 11-47-25.png': 'E',
+      'Screenshot from 2025-07-17 11-47-33.png': 'B',
+      'Screenshot from 2025-07-17 11-49-42.png': 'F',
+      'Screenshot from 2025-07-17 11-49-47.png': 'A',
+      'Screenshot from 2025-07-17 11-49-54.png': 'E',
+      'Screenshot from 2025-07-17 11-49-59.png': 'C',
+      'Screenshot from 2025-07-17 11-50-04.png': 'C',
+      'Screenshot from 2025-07-17 11-50-10.png': 'E',
+      'Screenshot from 2025-07-17 11-50-18.png': 'E',
+      'Screenshot from 2025-07-17 11-50-40.png': 'B',
+      'Screenshot from 2025-07-17 11-50-45.png': 'D',
+      'Screenshot from 2025-07-17 11-50-49.png': 'A',
+      'Screenshot from 2025-07-17 11-50-53.png': 'C',
+      'Screenshot from 2025-07-17 11-50-57.png': 'D',
+      'Screenshot from 2025-07-17 11-51-02.png': 'A',
+      'Screenshot from 2025-07-17 11-51-07.png': 'F',
+      'Screenshot from 2025-07-17 11-51-35.png': 'D',
+      'Screenshot from 2025-07-17 11-51-42.png': 'A'
+    };
+    
+    // Insert questions into database
+    let insertedCount = 0;
+    for (const [questionImage, correctAnswer] of Object.entries(QUESTIONS)) {
+      await db.query(
+        `INSERT INTO questions_bank (
+          question_text, 
+          question_image, 
+          option_a_text, option_b_text, option_c_text, 
+          option_d_text, option_e_text, option_f_text,
+          correct_answer, 
+          difficulty_level, 
+          category, 
+          is_active
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+        ON CONFLICT DO NOTHING`,
+        [
+          'Choose the appropriate shape to replace the shape that is missing.',
+          questionImage,
+          'Option A', 'Option B', 'Option C',
+          'Option D', 'Option E', 'Option F',
+          correctAnswer,
+          1,
+          'pattern_recognition',
+          true
+        ]
+      );
+      insertedCount++;
+    }
+    
+    console.log(`Successfully populated questions bank with ${insertedCount} questions`);
+    
+  } catch (error) {
+    console.error('Error populating questions bank:', error);
   }
 }
 
