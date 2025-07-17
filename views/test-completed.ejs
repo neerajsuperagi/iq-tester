@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Completed - IQ Tester</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .completion-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 0;
+        }
+        .completion-card {
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            overflow: hidden;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+        .card-header {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 3rem 2rem;
+            position: relative;
+        }
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        .card-body {
+            padding: 3rem 2rem;
+        }
+        .completion-message {
+            font-size: 1.25rem;
+            color: #495057;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .info-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-left: 4px solid #28a745;
+        }
+        .info-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .info-item:last-child {
+            border-bottom: none;
+        }
+        .info-label {
+            font-weight: 600;
+            color: #495057;
+        }
+        .info-value {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .next-steps {
+            background: #e3f2fd;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-left: 4px solid #2196f3;
+        }
+        .btn-login {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 25px;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            min-width: 200px;
+            display: inline-block;
+            text-align: center;
+        }
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            color: white;
+            text-decoration: none;
+        }
+
+        .confetti {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ffc107;
+            animation: confetti-fall 3s linear infinite;
+        }
+        .confetti-piece:nth-child(odd) {
+            background: #28a745;
+            animation-delay: -0.5s;
+        }
+        .confetti-piece:nth-child(even) {
+            background: #17a2b8;
+            animation-delay: -1s;
+        }
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        .thank-you-message {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border-left: 4px solid #ffc107;
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="completion-container">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="completion-card">
+                        <div class="card-header">
+                            <div class="confetti">
+                                <div class="confetti-piece" style="left: 10%; animation-delay: 0s;"></div>
+                                <div class="confetti-piece" style="left: 20%; animation-delay: -0.3s;"></div>
+                                <div class="confetti-piece" style="left: 30%; animation-delay: -0.7s;"></div>
+                                <div class="confetti-piece" style="left: 40%; animation-delay: -1.2s;"></div>
+                                <div class="confetti-piece" style="left: 50%; animation-delay: -1.5s;"></div>
+                                <div class="confetti-piece" style="left: 60%; animation-delay: -0.8s;"></div>
+                                <div class="confetti-piece" style="left: 70%; animation-delay: -2s;"></div>
+                                <div class="confetti-piece" style="left: 80%; animation-delay: -1.3s;"></div>
+                                <div class="confetti-piece" style="left: 90%; animation-delay: -0.4s;"></div>
+                            </div>
+                            <div class="success-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <h1 class="mb-0">Congratulations!</h1>
+                            <p class="mb-0 mt-2 fs-5">IQ Test Successfully Completed</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="completion-message">
+                                Thank you for taking the IQ assessment! Your test has been successfully submitted and your results are now being processed.
+                            </div>
+
+                            <div class="info-section">
+                                <h5 class="mb-3">
+                                    <i class="fas fa-info-circle text-success me-2"></i>
+                                    Test Summary
+                                </h5>
+                                <div class="info-item">
+                                    <span class="info-label">
+                                        <i class="fas fa-question-circle me-2"></i>
+                                        Total Questions
+                                    </span>
+                                    <span class="info-value">30</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">
+                                        <i class="fas fa-clock me-2"></i>
+                                        Test Duration
+                                    </span>
+                                    <span class="info-value">15 Minutes</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">
+                                        <i class="fas fa-calendar me-2"></i>
+                                        Completion Date
+                                    </span>
+                                    <span class="info-value" id="completionDate"></span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">
+                                        <i class="fas fa-check me-2"></i>
+                                        Status
+                                    </span>
+                                    <span class="info-value">
+                                        <i class="fas fa-check-circle me-1"></i>
+                                        Submitted Successfully
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="next-steps">
+                                <h5 class="mb-3">
+                                    <i class="fas fa-arrow-right text-primary me-2"></i>
+                                    What Happens Next?
+                                </h5>
+                                <ul class="list-unstyled mb-0">
+                                    <li class="mb-2">
+                                        <i class="fas fa-cog text-primary me-2"></i>
+                                        Your responses are being analyzed and scored
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-chart-bar text-primary me-2"></i>
+                                        Your IQ score has been calculated and saved
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-user-tie text-primary me-2"></i>
+                                        HR team will review your results
+                                    </li>
+                                    <li class="mb-0">
+                                        <i class="fas fa-envelope text-primary me-2"></i>
+                                        You'll be contacted with further updates
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="thank-you-message">
+                                <h6 class="mb-2">
+                                    <i class="fas fa-heart text-warning me-2"></i>
+                                    Thank You!
+                                </h6>
+                                <p class="mb-0 small">
+                                    We appreciate the time you invested in this assessment. Your effort helps us understand your problem-solving capabilities and cognitive skills.
+                                </p>
+                            </div>
+
+                            <div class="mt-4">
+                                <a href="/" class="btn btn-login pulse">
+                                    <i class="fas fa-sign-in-alt me-2"></i>
+                                    Return to Login
+                                </a>
+                            </div>
+
+                            <div class="mt-4">
+                                <small class="text-muted">
+                                    <i class="fas fa-shield-alt me-1"></i>
+                                    Your data is secure and will only be used for assessment purposes.
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Display current date and time
+        document.addEventListener('DOMContentLoaded', function() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('completionDate').textContent = now.toLocaleDateString('en-US', options);
+        });
+
+        // Add some celebration effects
+        setTimeout(function() {
+            // You can add additional celebration effects here
+        }, 1000);
+
+
+    </script>
+</body>
+</html> 

@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: iq-tester-app
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SESSION_SECRET
+        generateValue: true
+    autoDeploy: true
+    
+databases:
+  - name: iq-tester-db
+    plan: free
+    databaseName: iq_tester
+    user: iq_tester_user 
