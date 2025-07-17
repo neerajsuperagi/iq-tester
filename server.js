@@ -585,10 +585,29 @@ async function initDatabase() {
     await db.query(schemaSQL);
     console.log('Database initialized successfully');
     
+    // Fix existing table constraint (migration)
+    await fixPasswordHashConstraint();
+    
     // Create admin user from environment variables
     await createAdminUser();
   } catch (error) {
     console.error('Database initialization error:', error);
+  }
+}
+
+// Fix password_hash constraint for existing databases (migration)
+async function fixPasswordHashConstraint() {
+  try {
+    // Try to alter the column to allow NULL values
+    await db.query('ALTER TABLE users ALTER COLUMN password_hash DROP NOT NULL');
+    console.log('Password hash constraint fixed - column now allows NULL values');
+  } catch (error) {
+    // If the constraint doesn't exist or already fixed, ignore the error
+    if (error.code === '42804' || error.message.includes('does not exist')) {
+      console.log('Password hash constraint already fixed or does not exist');
+    } else {
+      console.log('Note: Could not modify password_hash constraint (this is ok if column is already nullable)');
+    }
   }
 }
 
