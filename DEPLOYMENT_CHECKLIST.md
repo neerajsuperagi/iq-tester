@@ -66,7 +66,7 @@
    - `NODE_ENV=production`
 
 ## ⚠️ **Post-Deployment Tasks**
-1. **Change Admin Password** - Default is `admin/admin123`
+1. **Set Admin Credentials** - Configure `ADMIN_USERNAME` and `ADMIN_PASSWORD` environment variables
 2. **Test All Features** - Complete end-to-end testing
 3. **Monitor Logs** - Check for any startup issues
 4. **Update Question Answers** - If needed using `scripts/update_answers.js`

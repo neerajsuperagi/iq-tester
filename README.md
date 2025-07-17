@@ -42,6 +42,27 @@ A comprehensive web-based IQ testing platform designed for organizational recrui
 - PostgreSQL 12+ (or use Docker Compose)
 - Git
 
+## ⚙️ Environment Configuration
+
+Create a `.env` file in the root directory for secure configuration:
+
+```bash
+# Database
+DATABASE_URL=postgres://username:password@localhost:5432/iqtester
+
+# Session Security  
+SESSION_SECRET=your-super-secret-session-key-here
+
+# Admin Credentials (Change these!)
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=your-secure-admin-password-here
+
+# Environment
+NODE_ENV=production
+```
+
+**⚠️ Security Warning**: Never commit real credentials to version control!
+
 ## 🚀 Quick Start with Docker
 
 ### 1. Clone the Repository
@@ -64,7 +85,7 @@ docker-compose down
 
 ### 3. Access the Application
 - **Main Application**: http://localhost:3000
-- **Admin Login**: username: `admin`, password: `admin123`
+- **Admin Login**: Use environment variables `ADMIN_USERNAME` and `ADMIN_PASSWORD` (defaults: admin/admin123)
 - **Database Management** (optional): http://localhost:8080 (email: admin@iqtester.com, password: admin)
 
 ## 🔧 Manual Setup
@@ -133,7 +154,7 @@ npm start
 
 1. **Login**:
    - Use the admin tab on the login page
-   - Default credentials: username `admin`, password `admin123`
+   - Set admin credentials using `ADMIN_USERNAME` and `ADMIN_PASSWORD` environment variables
 
 2. **Dashboard Features**:
    - View all completed tests

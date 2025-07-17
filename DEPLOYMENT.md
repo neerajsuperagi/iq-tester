@@ -79,10 +79,10 @@ PORT=3000
 ### Step 6: Initialize Database
 
 The application will automatically run the database schema on first startup. The admin user will be created with:
-- **Username**: `admin`
-- **Password**: `admin123`
+- **Username**: Set via `ADMIN_USERNAME` environment variable (default: admin)
+- **Password**: Set via `ADMIN_PASSWORD` environment variable (default: admin123)
 
-**Security Note**: Change the admin password after first login in production!
+**Security Note**: Always set secure admin credentials via environment variables in production!
 
 ## 🔧 Render Configuration Files
 
@@ -118,7 +118,7 @@ services:
 
 After deployment:
 1. **Application URL**: `https://your-app-name.onrender.com`
-2. **Admin Login**: Use the admin tab with `admin`/`admin123`
+2. **Admin Login**: Use the admin tab with your configured admin credentials
 3. **Candidate Registration**: Available on the main page
 
 ## 🔒 Production Security Checklist

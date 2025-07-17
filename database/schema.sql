@@ -90,10 +90,7 @@ CREATE TABLE IF NOT EXISTS test_results (
     completion_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Insert default admin user (password: admin123)
-INSERT INTO admins (username, password_hash) VALUES 
-('admin', '$2a$10$8PnRcFKIf7111ZGzAukP5OB/yJnoU7b/n9ls16y.s.P2jlDVqvD26')
-ON CONFLICT (username) DO NOTHING;
+-- Admin user will be created dynamically using environment variables
 
 -- Create indexes for better performance
 CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);

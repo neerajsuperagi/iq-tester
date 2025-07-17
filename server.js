@@ -584,8 +584,39 @@ async function initDatabase() {
     const schemaSQL = fs.readFileSync('./database/schema.sql', 'utf8');
     await db.query(schemaSQL);
     console.log('Database initialized successfully');
+    
+    // Create admin user from environment variables
+    await createAdminUser();
   } catch (error) {
     console.error('Database initialization error:', error);
+  }
+}
+
+// Create admin user from environment variables
+async function createAdminUser() {
+  try {
+    const adminUsername = process.env.ADMIN_USERNAME || 'admin';
+    const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
+    
+    // Check if admin already exists
+    const existingAdmin = await db.query('SELECT * FROM admins WHERE username = $1', [adminUsername]);
+    
+    if (existingAdmin.rows.length === 0) {
+      // Hash the password
+      const hashedPassword = await bcrypt.hash(adminPassword, 10);
+      
+      // Insert admin user
+      await db.query(
+        'INSERT INTO admins (username, password_hash) VALUES ($1, $2)',
+        [adminUsername, hashedPassword]
+      );
+      
+      console.log(`Admin user '${adminUsername}' created successfully`);
+    } else {
+      console.log(`Admin user '${adminUsername}' already exists`);
+    }
+  } catch (error) {
+    console.error('Error creating admin user:', error);
   }
 }
 
